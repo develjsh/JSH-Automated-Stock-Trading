@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"JSH-Automated-Stock-Trading/config"
+	"fmt"
+)
+
+var ACCESS_TOKEN string
 
 func main() {
-	fmt.Println("JSH Automated Stock Trading Begin")
+	config := config.LoadConfigFromEnv()
+	fmt.Println(config)
 }
