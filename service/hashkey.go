@@ -9,7 +9,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func hashkey(datas map[string]interface{}) string {
+func Hashkey(datas map[string]interface{}) string {
 	// 요청 헤더 설정
 	headers := map[string]string{
 		"Content-Type": "application/json",
@@ -30,11 +30,11 @@ func hashkey(datas map[string]interface{}) string {
 	req := fasthttp.AcquireRequest()
 	defer fasthttp.ReleaseRequest(req)
 
+	req.Header.SetMethod("POST")
+	req.SetRequestURI(url)
 	req.Header.Set("Content-Type", headers["Content-Type"])
 	req.Header.Set("appKey", headers["appKey"])
 	req.Header.Set("appSecret", headers["appSecret"])
-	req.SetRequestURI(url)
-	req.Header.SetMethod("POST")
 	req.SetBody(bodyBytes)
 
 	// fasthttp 응답 객체 생성
