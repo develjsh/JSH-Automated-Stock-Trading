@@ -9,12 +9,6 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-var (
-	APP_KEY    = "your_app_key"
-	APP_SECRET = "your_app_secret"
-	URL_BASE   = "your_base_url"
-)
-
 func hashkey(datas map[string]interface{}) string {
 	// 요청 헤더 설정
 	headers := map[string]string{
