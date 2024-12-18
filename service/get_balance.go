@@ -9,6 +9,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+// 매수 가능 조회
 func GetBalancer(accessToken string) {
 	// 요청 헤더 설정
 	headers := map[string]string{
@@ -31,17 +32,17 @@ func GetBalancer(accessToken string) {
 	req.Header.Set("appKey", headers["appKey"])
 	req.Header.Set("appSecret", headers["appSecret"])
 	req.Header.Set("authorization", "Bearer "+accessToken)
-	req.Header.Set("tr_id", "TTTC8908R")
+	req.Header.Set("tr_id", "VTTC8908R")
 	req.Header.Set("custtype", "P")
 
 	args := req.URI().QueryArgs()
-	args.Set("CANO", config.SetConfig.Cano)
-	args.Set("ACNT_PRDT_CD", config.SetConfig.AcntPrdtCd)
-	args.Set("PDNO", "005930")
-	args.Set("ORD_UNPR", "65500")
-	args.Set("ORD_DVSN", "01")
-	args.Set("CMA_EVLU_AMT_ICLD_YN", "Y")
-	args.Set("OVRS_ICLD_YN", "Y")
+	args.Set("CANO", config.SetConfig.Cano)               // 종합계좌번호
+	args.Set("ACNT_PRDT_CD", config.SetConfig.AcntPrdtCd) // 계좌상품코드
+	args.Set("PDNO", "005930")                            //상품번호
+	args.Set("ORD_UNPR", "65500")                         // 주문단가
+	args.Set("ORD_DVSN", "01")                            // 주문구분
+	args.Set("CMA_EVLU_AMT_ICLD_YN", "Y")                 // CMA평가금액포함여부
+	args.Set("OVRS_ICLD_YN", "Y")                         // 해외포함여부
 
 	fmt.Printf("최종 요청 URI: %s\n", req.URI().String())
 
