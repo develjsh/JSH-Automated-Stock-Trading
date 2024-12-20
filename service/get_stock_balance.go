@@ -3,6 +3,7 @@ package service
 import (
 	"JSH-Automated-Stock-Trading/config"
 	"encoding/json"
+
 	"fmt"
 	"log"
 	"time"
