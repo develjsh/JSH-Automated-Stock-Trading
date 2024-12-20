@@ -10,6 +10,8 @@ var ACCESS_TOKEN string
 
 func main() {
 	config.LoadConfigFromEnv()
+	service.SendMessage("test", config.SetConfig.DiscordWebhookUrl)
+
 	accessToken := service.GetAccessToken()
 
 	// 보유 현금 조회
