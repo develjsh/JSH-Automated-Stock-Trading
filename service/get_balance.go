@@ -5,12 +5,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/valyala/fasthttp"
 )
 
+var response struct {
+	Output struct {
+		OrderableCash string `json:"ord_psbl_cash"`
+	} `json:"output"`
+}
+
 // 매수 가능 조회
-func GetBalancer(accessToken string) {
+func GetBalancer(accessToken string) int {
 	// 요청 헤더 설정
 	headers := map[string]string{
 		"Content-Type": "application/json",
@@ -56,9 +63,20 @@ func GetBalancer(accessToken string) {
 	}
 
 	// 응답 파싱
-	var response map[string]interface{}
+	// JSON 파싱
 	if err := json.Unmarshal(resp.Body(), &response); err != nil {
 		log.Fatalf("Error unmarshaling response: %v", err)
 	}
-	fmt.Println(response)
+
+	// 주문 가능 현금 잔고 가져오기
+	orderableCash := response.Output.OrderableCash
+	fmt.Printf("주문 가능 현금 잔고: %s원\n", orderableCash)
+
+	// 문자열을 정수로 변환
+	cash, err := strconv.Atoi(orderableCash)
+	if err != nil {
+		log.Fatalf("Error converting orderable cash to int: %v", err)
+	}
+
+	return cash
 }
