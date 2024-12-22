@@ -42,13 +42,7 @@ func SendMessage(msg string, webhookURL string) (err error) {
 }
 
 func SendDiscordStartOfProgram(totalCash, targetBuyCount int, buyPercent float64) (err error) {
-	loc, err := time.LoadLocation("Asia/Seoul")
-	if err != nil {
-		panic(fmt.Sprintf("Failed to load location: %v", err))
-	}
-
-	// 현재 시간 한국 시간으로 변환
-	now := time.Now().In(loc)
+	now := time.Now()
 
 	// 종목당 매수 금액 계산
 	buyAmount := float64(totalCash) * buyPercent
@@ -63,7 +57,7 @@ func SendDiscordStartOfProgram(totalCash, targetBuyCount int, buyPercent float64
 			"종목당 매수 금액: %.0f원\n"+
 			"매수할 종목 수: %d개\n"+
 			"=================\n",
-		now.Format("2006-01-02"),
+		now.Format("2006-01-02 15:04"),
 		totalCash,
 		buyPercent*100,
 		buyAmount,
