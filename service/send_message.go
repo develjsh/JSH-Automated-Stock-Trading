@@ -50,7 +50,7 @@ func SendDiscordStartOfProgram(totalCash, targetBuyCount int, buyPercent float64
 	// 메시지 생성
 	message := fmt.Sprintf(
 		"=== 국내 주식 자동매매 프로그램을 시작합니다 ===\n"+
-			"오늘 날짜 (한국 시간): %s\n"+
+			"오늘 날짜: %s\n"+
 			"==== 매수 전략 ====\n"+
 			"총 보유 현금: %d원\n"+
 			"종목당 매수 비율: %.2f%%\n"+
