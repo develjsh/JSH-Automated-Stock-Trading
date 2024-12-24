@@ -39,13 +39,13 @@ func GetBalancer(accessToken string) int {
 	req.Header.Set("appKey", headers["appKey"])
 	req.Header.Set("appSecret", headers["appSecret"])
 	req.Header.Set("authorization", "Bearer "+accessToken)
-	req.Header.Set("tr_id", "VTTC8908R")
-	req.Header.Set("custtype", "P")
+	req.Header.Set("tr_id", "VTTC8908R") // 모의 투자: VTTC8908R, 실전 투자: TTTC8908R
+	req.Header.Set("custtype", "P")      // custtype: 고객 타입, P: 개인, B: 법인
 
 	args := req.URI().QueryArgs()
 	args.Set("CANO", config.SetConfig.Cano)               // 종합계좌번호
 	args.Set("ACNT_PRDT_CD", config.SetConfig.AcntPrdtCd) // 계좌상품코드
-	args.Set("PDNO", "005930")                            //상품번호
+	args.Set("PDNO", "005930")                            // 상품번호
 	args.Set("ORD_UNPR", "65500")                         // 주문단가
 	args.Set("ORD_DVSN", "01")                            // 주문구분
 	args.Set("CMA_EVLU_AMT_ICLD_YN", "Y")                 // CMA평가금액포함여부
