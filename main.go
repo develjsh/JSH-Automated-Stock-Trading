@@ -25,6 +25,9 @@ func main() {
 	}
 
 	// 매수 전략 설정
+	// symbolList := []string{"005930", "035720", "000660", "069500"}
+	// 매수 완료된 종목 리스트
+	// var boughtList []string
 	targetBuyCount := 3 // 매수할 종목 수
 	buyPercent := 0.33  // 종목당 매수 금액 비율
 	service.SendDiscordStartOfProgram(totalCash, targetBuyCount, buyPercent)
