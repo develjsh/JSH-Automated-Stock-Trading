@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func SendMessage(msg string, webhookURL string) (err error) {
+func SendMessage(msg string, webhookURL string) {
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Println("Send message error", r)
@@ -38,10 +38,9 @@ func SendMessage(msg string, webhookURL string) (err error) {
 	// 응답 상태 코드 출력
 	fmt.Printf("Message sent: %s\n", message)
 	fmt.Printf("Response status: %s\n", resp.Status)
-	return nil
 }
 
-func SendDiscordStartOfProgram(totalCash, targetBuyCount int, buyPercent float64) (err error) {
+func SendDiscordStartOfProgram(totalCash, targetBuyCount int, buyPercent float64) {
 	now := time.Now()
 
 	// 종목당 매수 금액 계산
@@ -63,8 +62,5 @@ func SendDiscordStartOfProgram(totalCash, targetBuyCount int, buyPercent float64
 		buyAmount,
 		targetBuyCount,
 	)
-	if err := SendMessage(message, config.SetConfig.DiscordWebhookUrl); err != nil {
-		return err
-	}
-	return nil
+	SendMessage(message, config.SetConfig.DiscordWebhookUrl)
 }
