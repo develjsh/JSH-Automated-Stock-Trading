@@ -23,8 +23,9 @@ func main() {
 	symbolList := []string{"005930", "035720", "000660", "069500"}
 	// 매수 완료된 종목 리스트
 	var boughtList []string
-	targetBuyCount := 3 // 매수할 종목 수
-	buyPercent := 0.33  // 종목당 매수 금액 비율
+	targetBuyCount := 3                               // 매수할 종목 수
+	buyPercent := 0.33                                // 종목당 매수 금액 비율
+	buyAmount := int(float64(totalCash) * buyPercent) // 종목별 주문 금액 계산
 	service.SendDiscordStartOfProgram(totalCash, targetBuyCount, buyPercent)
 	soldout := false
 
@@ -40,9 +41,7 @@ func main() {
 		// 오늘의 요일 (0=일요일, 6=토요일)
 		today := int(tNow.Weekday())
 		if today == 5 || today == 6 { // 토요일이나 일요일이면 자동 종료
-			if err := service.SendMessage("주말이므로 프로그램을 종료합니다.", config.SetConfig.DiscordWebhookUrl); err != nil {
-				break
-			}
+			service.SendMessage("주말이므로 프로그램을 종료합니다.", config.SetConfig.DiscordWebhookUrl)
 			break
 		}
 		if t9.Before(tNow) && tNow.Before(tStart) && !soldout { // 잔여 수량 매도
@@ -71,6 +70,23 @@ func main() {
 					}
 					if isBought {
 						continue
+					}
+					targetPrice, err := service.GetTargetPrice(sym, accessToken)
+					if err != nil {
+						continue
+					}
+					currentPrice, err := service.GetCurrentPrice(sym, accessToken)
+					if err != nil {
+						continue
+					}
+					if targetPrice < currentPrice {
+						buyQty := 0 // 매수할 수량 초기화
+						buyQty = int(float64(buyAmount) / float64(currentPrice))
+						if buyQty > 0 {
+							message := fmt.Sprintf("%s 목표가 달성(%f < %f) 매수를 시도합니다.", sym, targetPrice, currentPrice)
+							service.SendMessage(message, config.SetConfig.DiscordWebhookUrl)
+
+						}
 					}
 				}
 			}
