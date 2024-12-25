@@ -62,7 +62,7 @@ func main() {
 
 			soldout = true
 			boughtList = []string{}
-			stockDict = service.GetStockBalance()
+			stockDict = service.GetStockBalance(accessToken)
 		}
 		if tStart.Before(tNow) && tNow.Before(tSell) {
 
