@@ -26,8 +26,8 @@ func GetBalancer(accessToken string) int {
 	}
 
 	// URL 설정
-	PATH := "uapi/domestic-stock/v1/trading/inquire-psbl-order"
-	url := fmt.Sprintf("%s/%s", config.SetConfig.UrlBase, PATH)
+	path := "uapi/domestic-stock/v1/trading/inquire-psbl-order"
+	url := fmt.Sprintf("%s/%s", config.SetConfig.UrlBase, path)
 
 	// HTTP POST 요청 생성
 	req := fasthttp.AcquireRequest()

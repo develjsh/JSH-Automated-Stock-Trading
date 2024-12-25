@@ -3,6 +3,7 @@ package main
 import (
 	"JSH-Automated-Stock-Trading/config"
 	"JSH-Automated-Stock-Trading/service"
+	"fmt"
 	"time"
 )
 
@@ -50,7 +51,18 @@ func main() {
 			}
 			break
 		}
-		if t9.Before(tNow) && tNow.Before(tStart) && !soldout {
+		if t9.Before(tNow) && tNow.Before(tStart) && !soldout { // 잔여 수량 매도
+			for sym, qty := range stockDict {
+				if success := service.Sell(sym, qty, accessToken); success {
+					fmt.Printf("매도 성공: %s, 수량: %d\n", sym, qty)
+				} else {
+					fmt.Printf("매도 실패: %s, 수량: %d\n", sym, qty)
+				}
+			}
+
+			soldout = true
+			boughtList = []string{}
+			stockDict = service.GetStockBalance()
 		}
 		if tStart.Before(tNow) && tNow.Before(tSell) {
 
@@ -58,7 +70,8 @@ func main() {
 		if tSell.Before(tNow) && tNow.Before(tExit) {
 		}
 		if tExit.Before(tNow) {
-
+			service.SendMessage("프로그램을 종료합니다.", config.SetConfig.DiscordWebhookUrl)
+			break
 		}
 
 	}
