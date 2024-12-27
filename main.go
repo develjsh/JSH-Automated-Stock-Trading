@@ -86,6 +86,8 @@ func main() {
 							message := fmt.Sprintf("%s 목표가 달성(%f < %f) 매수를 시도합니다.", sym, targetPrice, currentPrice)
 							service.SendMessage(message, config.SetConfig.DiscordWebhookUrl)
 
+							// 매수 시도
+
 						}
 					}
 				}
