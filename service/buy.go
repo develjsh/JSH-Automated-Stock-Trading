@@ -1,6 +1,7 @@
 package service
 
 import (
+	"JSH-Automated-Stock-Trading/config"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -8,27 +9,17 @@ import (
 	"net/http"
 )
 
-type BuyRequest struct {
-	CANO         string `json:"CANO"`
-	ACNT_PRDT_CD string `json:"ACNT_PRDT_CD"`
-	PDNO         string `json:"PDNO"`
-	ORD_DVSN     string `json:"ORD_DVSN"`
-	ORD_QTY      string `json:"ORD_QTY"`
-	ORD_UNPR     string `json:"ORD_UNPR"`
-}
-
 func Buy(code string, qty int, accessToken string) bool {
-	const URL_BASE = "https://api.example.com"
-	const PATH = "uapi/domestic-stock/v1/trading/order-cash"
-	url := fmt.Sprintf("%s/%s", URL_BASE, PATH)
+	path := "uapi/domestic-stock/v1/trading/order-cash"
+	url := fmt.Sprintf("%s/%s", config.SetConfig.UrlBase, path)
 
-	data := BuyRequest{
-		CANO:         "12345678",
-		ACNT_PRDT_CD: "01",
-		PDNO:         code,
-		ORD_DVSN:     "01",
-		ORD_QTY:      fmt.Sprintf("%d", qty),
-		ORD_UNPR:     "0",
+	data := map[string]interface{}{
+		"CANO":         "your_account_number",     // 계좌번호
+		"ACNT_PRDT_CD": "your_account_product_cd", // 계좌상품코드
+		"PDNO":         code,                      // 종목 코드
+		"ORD_DVSN":     "01",                      // 주문 구분 (시장가)
+		"ORD_QTY":      qty,                       // 주문 수량
+		"ORD_UNPR":     "0",                       // 주문 단가 (시장가)
 	}
 
 	// Serialize request data to JSON
