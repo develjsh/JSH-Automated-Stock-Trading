@@ -83,7 +83,7 @@ func main() {
 						buyQty := 0 // 매수할 수량 초기화
 						buyQty = int(float64(buyAmount) / float64(currentPrice))
 						if buyQty > 0 {
-							message := fmt.Sprintf("%s 목표가 달성(%f < %f) 매수를 시도합니다.", sym, targetPrice, currentPrice)
+							message := fmt.Sprintf("%s 목표가 달성(%d < %d) 매수를 시도합니다.", sym, targetPrice, currentPrice)
 							service.SendMessage(message, config.SetConfig.DiscordWebhookUrl)
 
 							// 매수 시도
@@ -104,7 +104,23 @@ func main() {
 				time.Sleep(5 * time.Second)
 			}
 		}
-		if tSell.Before(tNow) && tNow.Before(tExit) {
+		if tSell.Before(tNow) && tNow.Before(tExit) { // PM 03:15 ~ PM 03:20 : 일괄 매도
+			if !soldout {
+				stockDict = service.GetStockBalance(accessToken)
+				stockDictSize := len(stockDict)
+				sellSize := 0
+				for sym, qty := range stockDict {
+					if success := service.Sell(sym, qty, accessToken); success {
+						sellSize += 1
+						service.SendMessage(fmt.Sprintf("매도 성공: %s, 수량: %s\n", sym, qty), config.SetConfig.DiscordWebhookUrl)
+					} else {
+						service.SendMessage(fmt.Sprintf("매도 실패: %s, 수량: %s\n", sym, qty), config.SetConfig.DiscordWebhookUrl)
+					}
+				}
+				if stockDictSize == sellSize {
+					soldout = true
+				}
+			}
 		}
 		if tExit.Before(tNow) {
 			service.SendMessage("프로그램을 종료합니다.", config.SetConfig.DiscordWebhookUrl)
