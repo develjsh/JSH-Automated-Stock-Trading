@@ -100,7 +100,7 @@ func main() {
 			time.Sleep(1 * time.Second)
 			// 매 30분마다 잔고 확인
 			if tNow.Minute()%30 == 0 && tNow.Second() <= 5 {
-				stockDict = service.GetStockBalance()
+				stockDict = service.GetStockBalance(accessToken)
 				time.Sleep(5 * time.Second)
 			}
 		}
