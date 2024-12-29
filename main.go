@@ -122,11 +122,10 @@ func main() {
 				}
 			}
 		}
-		if tExit.Before(tNow) {
+		if tExit.Before(tNow) { // PM 03:20 ~ :프로그램 종료
 			service.SendMessage("프로그램을 종료합니다.", config.SetConfig.DiscordWebhookUrl)
 			break
 		}
-
 	}
 
 }
