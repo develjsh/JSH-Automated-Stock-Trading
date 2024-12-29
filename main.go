@@ -87,10 +87,21 @@ func main() {
 							service.SendMessage(message, config.SetConfig.DiscordWebhookUrl)
 
 							// 매수 시도
-
+							if success := service.Buy(sym, buyQty, accessToken); success {
+								soldout = false
+								boughtList = append(boughtList, sym)
+								stockDict = service.GetStockBalance(accessToken)
+							}
 						}
 					}
+					time.Sleep(1 * time.Second)
 				}
+			}
+			time.Sleep(1 * time.Second)
+			// 매 30분마다 잔고 확인
+			if tNow.Minute()%30 == 0 && tNow.Second() <= 5 {
+				stockDict = service.GetStockBalance()
+				time.Sleep(5 * time.Second)
 			}
 		}
 		if tSell.Before(tNow) && tNow.Before(tExit) {
