@@ -10,7 +10,16 @@ import (
 var ACCESS_TOKEN string
 
 func main() {
+	defer func() {
+		if r := recover(); r != nil {
+			service.SendMessage("프로그램 실행 중 panic 발생!!!", config.SetConfig.DiscordWebhookUrl)
+		}
+	}()
+
 	config.LoadConfigFromEnv()
+	service.SendMessage("테스트 send message", config.SetConfig.DiscordWebhookUrl)
+	panic("panice 발생")
+
 	accessToken := service.GetAccessToken()
 
 	// 보유 현금 조회
