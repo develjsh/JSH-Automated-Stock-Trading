@@ -17,8 +17,6 @@ func main() {
 	}()
 
 	config.LoadConfigFromEnv()
-	service.SendMessage("테스트 send message", config.SetConfig.DiscordWebhookUrl)
-	panic("panice 발생")
 
 	accessToken := service.GetAccessToken()
 
