@@ -9,6 +9,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+// 변동성 돌파 전략 기반 주식 매수 목표가 계산
 func GetTargetPrice(code string, accessToken string) (int, error) {
 	// URL 및 경로 설정
 	path := "uapi/domestic-stock/v1/quotations/inquire-daily-price"
