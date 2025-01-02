@@ -16,7 +16,7 @@ var response struct {
 	} `json:"output"`
 }
 
-// 매수 가능 조회
+// 주문 가능한 항목 조회
 func GetBalancer(accessToken string) int {
 	// 요청 헤더 설정
 	headers := map[string]string{
