@@ -97,6 +97,8 @@ func InquireBalance(accessToken string) int {
 	if err != nil {
 		SendMessage("InquireBalance eerror converting nass_amt to int", config.SetConfig.DiscordWebhookUrl)
 		return -1
+	} else {
+		SendMessage("InquireBalance : "+response.Output2[0].NassAmt, config.SetConfig.DiscordWebhookUrl)
 	}
 
 	return nassAmt
