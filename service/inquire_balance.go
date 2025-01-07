@@ -18,7 +18,7 @@ type Response struct {
 	Output2 []Output2 `json:"output2"`
 }
 
-// 주식 잔고 조회
+// 보유 현금 조회
 func InquireBalance(accessToken string) int {
 	// URL 및 경로 설정
 	path := "uapi/domestic-stock/v1/trading/inquire-balance"

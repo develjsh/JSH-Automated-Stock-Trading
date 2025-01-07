@@ -20,7 +20,7 @@ func main() {
 
 	accessToken := service.GetAccessToken()
 
-	// 주식 잔고 조회
+	// 보유 현금 조회
 	service.InquireBalance(accessToken)
 
 	// 주문 가능한 항목 조회
